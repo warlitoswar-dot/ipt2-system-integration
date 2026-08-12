@@ -1,0 +1,231 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<!-- Mobile responsiveness -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Page information -->
+<title>IPT2 - System Integration Lab</title>
+<meta name="description" content="IPT2 System Integration and Interoperability Laboratory Activity using HTML and JavaScript.">
+<meta name="keywords" content="IPT2, System Integration, Interoperability, HTML, JavaScript, Laboratory Activity">
+<meta name="author" content="Warlito Q. Garcia Jr.">
+
+<!-- Social Media / Sharing Tags -->
+<meta property="og:title" content="IPT2 - System Integration Lab">
+<meta property="og:description" content="System Integration and Interoperability Laboratory Activity using HTML and JavaScript.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="YOUR_WEBSITE_URL_HERE">
+<meta property="og:image" content="YOUR_IMAGE_URL_HERE">
+
+<!-- Twitter/X Sharing Tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="IPT2 - System Integration Lab">
+<meta name="twitter:description" content="System Integration and Interoperability Laboratory Activity using HTML and JavaScript.">
+<meta name="twitter:image" content="YOUR_IMAGE_URL_HERE">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+    background:linear-gradient(135deg,#6C63FF,#8E44AD,#5F27CD);
+    background-size:400% 400%;
+    animation:gradientBG 10s ease infinite;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:40px;
+}
+
+@keyframes gradientBG{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+.container{
+    width:900px;
+    background:white;
+    border-radius:20px;
+    box-shadow:0 20px 40px rgba(0,0,0,.25);
+    padding:35px;
+}
+
+h2{
+    text-align:center;
+    color:#5F27CD;
+    margin-bottom:10px;
+}
+
+.course{
+    text-align:center;
+    color:#555;
+    margin-bottom:20px;
+}
+
+hr{
+    border:none;
+    height:2px;
+    background:#ddd;
+    margin-bottom:25px;
+}
+
+.box{
+    background:#f8f9ff;
+    border-left:6px solid #6C63FF;
+    border-radius:12px;
+    padding:18px;
+    margin-bottom:20px;
+}
+
+.box h3{
+    color:#5F27CD;
+    margin-bottom:10px;
+}
+
+pre{
+    background:#1F2937;
+    color:#7CFC00;
+    padding:15px;
+    border-radius:10px;
+    font-size:15px;
+    overflow:auto;
+}
+
+button{
+    display:block;
+    margin:25px auto;
+    padding:15px 40px;
+    border:none;
+    border-radius:50px;
+    background:linear-gradient(135deg,#6C63FF,#8E44AD);
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    transform:translateY(-4px);
+    box-shadow:0 12px 25px rgba(108,99,255,.45);
+}
+
+.footer{
+    text-align:center;
+    margin-top:20px;
+    color:#666;
+    font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>System Integration & Interoperability Lab</h2>
+
+<p class="course">
+<b>Course:</b> IPT2 | La Consolacion College<br>
+<b>Student:</b> Warlito Q. Garcia Jr.
+</p>
+
+<hr>
+
+<div class="box">
+<h3>📥 System A Data (Admissions Silo Input)</h3>
+<pre id="inputData"></pre>
+</div>
+
+<button onclick="integrateSystems()">
+Run System Integration
+</button>
+
+<div class="box">
+<h3>📤 System B Data (Integrated Output)</h3>
+<pre id="outputData">
+Click the button to process integration...
+</pre>
+</div>
+
+<div class="footer">
+Laboratory Activity 1B • System Integration using HTML & JavaScript
+</div>
+
+<script>
+
+//=========================================
+// RAW DATA FROM SYSTEM A
+//=========================================
+
+const systemAData = {
+    std_id: "24-04320",
+    full_name: "Warlito Q. Garcia Jr",
+    acad_status: "IRREGULAR",
+    balance_str: "20900.00"
+};
+
+// Display raw JSON
+document.getElementById("inputData").textContent =
+JSON.stringify(systemAData, null, 2);
+
+//=========================================
+// SYSTEM INTEGRATION
+//=========================================
+
+function integrateSystems(){
+
+    // Split Name
+    let nameParts = systemAData.full_name.split(" ");
+
+    let firstName = nameParts[0];
+    let middleName = nameParts.slice(1, 2).join(" ");
+    let lastName = nameParts.slice(2, 3).join(" ");
+    let suffixName = nameParts.slice(3).join(" ");
+
+    // Map Status
+    let statusMapped =
+        systemAData.acad_status === ""
+        ? "Regular"
+        : "IRREG";
+
+    // Format Balance
+    let numericBalance = parseFloat(systemAData.balance_str);
+
+    let currencyFormatted =
+        "₱" +
+        numericBalance.toLocaleString("en-US",{
+            minimumFractionDigits:2,
+            maximumFractionDigits:2
+        });
+
+    // System B Output
+    const systemBData = {
+        studentNumber: systemAData.std_id,
+        lastName: lastName,
+        firstName: firstName,
+        status: statusMapped,
+        formattedBalance: currencyFormatted
+    };
+
+    // Display Output
+    document.getElementById("outputData").textContent =
+    JSON.stringify(systemBData, null, 2);
+}
+
+</script>
+
+</div>
+
+</body>
+</html>
+```
